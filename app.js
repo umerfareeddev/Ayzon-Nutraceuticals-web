@@ -66,6 +66,16 @@ sliderWrapper.addEventListener("mouseleave", startAuto);
 startAuto();
 
 
+// Navbar scroll effect
+window.addEventListener("scroll", () => {
+    const navbar = document.querySelector("nav");
+    if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+    } else {
+        navbar.classList.remove("scrolled");
+    }
+});
+
 
 // product change filter
 
@@ -168,7 +178,7 @@ const dropdowns = document.querySelectorAll('.nav-2-2 ul.menu li.dropdown > a');
 
 dropdowns.forEach(drop => {
     drop.addEventListener('click', (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         const parent = drop.parentElement;
         parent.classList.toggle('open');
     });
