@@ -1,0 +1,121 @@
+.detail-wrapper {
+    max-width: 1200px;
+    margin: 160px auto 60px auto;
+    padding: 0 20px;
+}
+
+.main-detail-box {
+    display: flex;
+    gap: 40px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+}
+
+.detail-left-img {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fdfdfd;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.detail-left-img img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+}
+
+.detail-right-info {
+    flex: 1.2;
+}
+
+.p-badge {
+    background: #019c4e;
+    color: white;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.detail-right-info h1 {
+    font-size: 34px;
+    color: #073b3a;
+    margin-bottom: 20px;
+}
+
+.info-card {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-card h3 {
+    color: #073b3a;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.info-card p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Related section */
+.related-products-sec {
+    margin-top: 60px;
+    border-top: 2px solid #eee;
+    padding-top: 30px;
+}
+
+.related-products-sec h2 {
+    color: #073b3a;
+    margin-bottom: 20px;
+}
+
+.related-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.rel-card {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.rel-card:hover {
+    transform: translateY(-5px);
+}
+
+.rel-card img {
+    max-width: 100%;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.rel-card h4 {
+    color: #073b3a;
+    font-size: 14px;
+}
+
+.rel-card p {
+    color: #019c4e;
+    font-size: 12px;
+    font-weight: 500;
+}

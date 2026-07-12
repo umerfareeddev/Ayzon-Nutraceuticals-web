@@ -253,6 +253,7 @@ nav.scrolled .nav-2 {
     transform: translateY(-10px);
     transition: all 0.3s ease;
     z-index: 100;
+    padding: 10px 0px;
 }
 
 .nav-2-2 ul li.dropdown:hover .dropdown-menu {
