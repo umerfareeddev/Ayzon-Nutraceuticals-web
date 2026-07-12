@@ -1,20 +1,29 @@
+/* ==========================================================================
+   Product Details Section Style (Fully Responsive)
+   ========================================================================== */
+
 .detail-wrapper {
     max-width: 1200px;
     margin: 160px auto 60px auto;
     padding: 0 20px;
+    width: 100%;
 }
 
 .main-detail-box {
     display: flex;
+    flex-direction: row;
+    /* Desktop par side-by-side */
     gap: 40px;
     background: #ffffff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+    align-items: flex-start;
 }
 
 .detail-left-img {
     flex: 1;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,12 +35,14 @@
 
 .detail-left-img img {
     max-width: 100%;
+    height: auto;
     max-height: 400px;
     object-fit: contain;
 }
 
 .detail-right-info {
     flex: 1.2;
+    width: 100%;
 }
 
 .p-badge {
@@ -50,6 +61,7 @@
     font-size: 34px;
     color: #073b3a;
     margin-bottom: 20px;
+    font-weight: 700;
 }
 
 .info-card {
@@ -62,6 +74,7 @@
     color: #073b3a;
     font-size: 16px;
     margin-bottom: 8px;
+    font-weight: 600;
 }
 
 .info-card p {
@@ -80,10 +93,13 @@
 .related-products-sec h2 {
     color: #073b3a;
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
 .related-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Desktop par 4 columns */
     gap: 20px;
 }
 
@@ -93,29 +109,95 @@
     padding: 15px;
     border-radius: 8px;
     text-decoration: none;
-    width: 200px;
     text-align: center;
-    transition: transform 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
 }
 
 .rel-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .rel-card img {
     max-width: 100%;
-    height: 120px;
+    height: 140px;
     object-fit: contain;
     margin-bottom: 10px;
 }
 
 .rel-card h4 {
     color: #073b3a;
-    font-size: 14px;
+    font-size: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
 }
 
 .rel-card p {
     color: #019c4e;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES (Responsive Breakpoints)
+   ========================================================================== */
+
+/* Tablets (992px se choti screens) */
+@media screen and (max-width: 992px) {
+    .detail-wrapper {
+        margin-top: 140px;
+        /* Navbar space adjust */
+    }
+
+    .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 cards ek line mein */
+    }
+}
+
+/* Mobile Phones (768px se choti screens) */
+@media screen and (max-width: 768px) {
+    .detail-wrapper {
+        margin-top: 120px;
+        padding: 0 15px;
+    }
+
+    .main-detail-box {
+        flex-direction: column;
+        /* Image upar aur text niche ho jayega */
+        gap: 25px;
+        padding: 20px;
+    }
+
+    .detail-left-img img {
+        max-height: 300px;
+        /* Mobile par image thodi choti controls */
+    }
+
+    .detail-right-info h1 {
+        font-size: 26px;
+        /* Heading text mobile k liye adjust */
+        margin-bottom: 15px;
+    }
+
+    .related-products-sec {
+        margin-top: 40px;
+    }
+
+    .related-products-sec h2 {
+        font-size: 20px;
+    }
+}
+
+/* Small Mobiles (480px se choti screens) */
+@media screen and (max-width: 480px) {
+    .related-grid {
+        grid-template-columns: 1fr;
+        /* Mobile par 1 product per line */
+    }
+
+    .detail-left-img img {
+        max-height: 250px;
+    }
 }
