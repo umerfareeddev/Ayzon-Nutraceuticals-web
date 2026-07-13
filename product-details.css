@@ -31,6 +31,8 @@
     border: 1px solid #f0f0f0;
     border-radius: 8px;
     padding: 20px;
+    overflow:hidden;
+    cursor:zoom-in;
 }
 
 .detail-left-img img {
@@ -38,6 +40,8 @@
     height: auto;
     max-height: 400px;
     object-fit: contain;
+    transition:transform .15s ease;
+    transform-origin:center;
 }
 
 .detail-right-info {

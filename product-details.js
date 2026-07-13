@@ -152,6 +152,25 @@ function renderRelatedProducts(product) {
     });
 }
 
+const zoomBox = document.querySelector(".detail-left-img");
+const zoomImg = zoomBox.querySelector("img");
+
+zoomBox.addEventListener("mousemove", (e) => {
+
+    const rect = zoomBox.getBoundingClientRect();
+
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    zoomImg.style.transformOrigin = `${x}% ${y}%`;
+    zoomImg.style.transform = "scale(2)";
+});
+
+zoomBox.addEventListener("mouseleave", () => {
+    zoomImg.style.transform = "scale(1)";
+    zoomImg.style.transformOrigin = "center";
+});
+
 // ======================================================
 // Previous & Next Product
 // ======================================================

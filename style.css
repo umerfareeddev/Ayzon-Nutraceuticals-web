@@ -101,7 +101,7 @@ nav {
     z-index: 1000;
     transition: all 0.3s ease-in-out;
     background-color: transparent;
-    /* Starting mein poori nav clear ya halki rahegi */
+    background-color: #fff;
 }
 
 /* Scroll hone ke baad full nav ka background white ho jaye */
@@ -422,7 +422,7 @@ nav.scrolled .nav-2 {
 /* section-3 */
 
 .section-3 {
-    margin: 0px 0px 50px 0px;
+    margin: 100px 0px 50px 0px;
 }
 
 .sec-3-1 {
