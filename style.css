@@ -196,7 +196,8 @@ nav.scrolled .nav-1 {
 }
 
 nav.scrolled .nav-2 {
-    background-color: #ffffff;    backdrop-filter: none;
+    background-color: #ffffff;
+    backdrop-filter: none;
 }
 
 .nav-2-2 {
@@ -222,58 +223,94 @@ nav.scrolled .nav-2 {
     color: #019c4e;
 }
 
-.nav-2-2 ul li.dropdown {
+.dropdown {
     position: relative;
 }
 
-.nav-2-2 ul li.dropdown>a {
+.dropdown>a {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
 }
 
-.nav-2-2 ul li.dropdown:hover>a .arrow {
+.dropdown>a i {
+    font-size: 12px;
+    transition: .3s;
+}
+
+.dropdown:hover>a i {
     transform: rotate(180deg);
-    transition: transform 0.3s ease;
 }
 
-.nav-2-2 ul li.dropdown .dropdown-menu {
+.dropdown-menu {
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: 130%;
+    left: 50%;
+    transform: translateX(-50%) translateY(15px);
+
+    width: 240px;
+    padding: 10px;
+
     background: #fff;
+    border-radius: 16px;
+
     display: flex;
     flex-direction: column;
-    min-width: 180px;
-    border-radius: 6px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    gap: 6px;
+
+    list-style: none;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .12);
+
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    z-index: 100;
-    padding: 10px 0px;
+
+    transition: .35s ease;
+
+    z-index: 999;
 }
 
-.nav-2-2 ul li.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
 }
 
-.nav-2-2 ul li.dropdown .dropdown-menu li a {
-    padding: 12px 20px;
-    display: block;
-    color: #073b3a;
-    font-size: 14px;
-    transition: all 0.2s ease;
+.dropdown-menu li {
+    width: 100%;
 }
 
-.nav-2-2 ul li.dropdown .dropdown-menu li a:hover {
-    background: #019c4e;
-    color: #fff;
-    border-radius: 4px;
+.dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 18px;
+
+    border-radius: 12px;
+
+    color: #222;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+
+    transition: .3s;
+}
+
+.dropdown-menu li a::after {
+    content: "→";
+    color: #00A651;
+    transition: .3s;
+}
+
+.dropdown-menu li a:hover {
+    background: #F2FBF6;
+    color: #00A651;
+    transform: translateX(6px);
+}
+
+.dropdown-menu li a:hover::after {
+    transform: translateX(5px);
 }
 
 
