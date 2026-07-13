@@ -1,95 +1,208 @@
-// 1. URL se product ki ID nikalna
-const urlParams = new URLSearchParams(window.location.search);
-const currentId = urlParams.get('id');
+// ======================================================
+// AYZONE PRODUCT DETAILS ENGINE
+// Part 1
+// ======================================================
 
-// 2. HTML Elements ko select karna jahan data show karna hai
-const imageSelector = document.getElementById('dynamic-p-img');
-const badgeSelector = document.getElementById('dynamic-p-badge');
-const titleSelector = document.getElementById('dynamic-p-title');
-const compositionSelector = document.getElementById('dynamic-p-comp');
-const descriptionSelector = document.getElementById('dynamic-p-desc');
-const relatedGrid = document.querySelector('.related-grid');
+// ---------------------------
+// URL Parameters
+// ---------------------------
 
-if (currentId) {
-    // 3. index.html se live cards ka data fetch karna
-    fetch('index.html')
-        .then(response => response.text())
-        .then(htmlText => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(htmlText, 'text/html');
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("id");
 
-            const allCards = doc.querySelectorAll('.sec-3-3-1');
-            let selectedCard = null;
+// ---------------------------
+// DOM Elements
+// ---------------------------
 
-            // 4. Sequential loop laga kar clicked product dhoondhna
-            allCards.forEach(card => {
-                const clickAttr = card.getAttribute('onclick');
-                if (clickAttr && clickAttr.includes(`id=${currentId}`)) {
-                    selectedCard = card;
-                }
+const productImage = document.getElementById("dynamic-p-img");
+const productBadge = document.getElementById("dynamic-p-badge");
+const productTitle = document.getElementById("dynamic-p-title");
+
+const detailsWrapper = document.getElementById(
+    "dynamic-info-cards-wrapper"
+);
+
+const relatedGrid = document.querySelector(".related-grid");
+const notFoundBox = document.getElementById("product-not-found");
+
+// Current Product
+let currentProduct = null;
+
+// ======================================================
+// Find Product
+// ======================================================
+
+function getProductById(id) {
+    return AYZONE_PRODUCTS.find(product => product.id === id);
+}
+
+// ======================================================
+// Product Not Found
+// ======================================================
+
+function showNotFound() {
+    document.querySelector(".main-detail-box").style.display = "none";
+    document.querySelector(".related-products-sec").style.display = "none";
+    notFoundBox.style.display = "block";
+
+}
+
+// ======================================================
+// Render Product Basic Information
+// ======================================================
+
+function renderProduct(product) {
+    productImage.src = product.img;
+    productImage.alt = product.title;
+    productBadge.innerText = product.category;
+    productTitle.innerText = product.title;
+}
+
+// =====================================================
+// Render Detail Cards
+// ======================================================
+
+function renderDetails(product) {
+    detailsWrapper.innerHTML = "";
+    const detailEntries = Object.entries(product.details);
+    detailEntries.forEach(([title, value]) => {
+        const card = document.createElement("div");
+        card.className = "info-card";
+        card.innerHTML = `
+            <h3>${title}</h3>
+            <p>${value}</p>
+        `;
+        detailsWrapper.appendChild(card);
+    });
+
+}
+
+// ======================================================
+// Render Gallery
+// ======================================================
+
+const galleryContainer = document.getElementById("dynamic-gallery");
+
+function renderGallery(product) {
+    if (!galleryContainer) return;
+
+    galleryContainer.innerHTML = "";
+
+    if (!product.gallery || product.gallery.length === 0) return;
+
+    product.gallery.forEach((image, index) => {
+        const thumb = document.createElement("img");
+
+        thumb.src = image;
+        thumb.alt = product.title;
+        thumb.className = "gallery-thumb";
+
+        if (index === 0) {
+            thumb.classList.add("active");
+        }
+
+        thumb.addEventListener("click", () => {
+            productImage.src = image;
+
+            document.querySelectorAll(".gallery-thumb").forEach(img => {
+                img.classList.remove("active");
             });
 
-            if (selectedCard) {
-                // 5. Card se details extract karna
-                const imgSrc = selectedCard.querySelector('.img img').getAttribute('src');
-                const imgAlt = selectedCard.querySelector('.img img').getAttribute('alt');
-                const catText = selectedCard.querySelector('.contant p:first-of-type').innerText;
-                const titleText = selectedCard.querySelector('.contant h1').innerText;
-                const compText = selectedCard.querySelector('.contant p:last-of-type').innerText;
-
-                // 6. UI par actual data render karna
-                imageSelector.src = imgSrc;
-                imageSelector.alt = imgAlt;
-                badgeSelector.innerText = catText;
-                titleSelector.innerText = titleText;
-                compositionSelector.innerText = compText;
-                descriptionSelector.innerText = `${titleText} is premium quality health supplement manufactured under standard nutraceutical observe configurations.`;
-
-                // 7. DYNAMIC RELATED PRODUCTS GENERATION
-                let relatedHTML = '';
-                let count = 0;
-
-                allCards.forEach(card => {
-                    const clickAttr = card.getAttribute('onclick');
-                    const cardCategory = card.getAttribute('data-category');
-                    const selectedCategory = selectedCard.getAttribute('data-category');
-
-                    // Same category ke doosre items dhoondhna (max 2 items)
-                    if (cardCategory === selectedCategory && !clickAttr.includes(`id=${currentId}`) && count < 4) {
-                        const rImg = card.querySelector('.img img').getAttribute('src');
-                        const rTitle = card.querySelector('.contant h1').innerText;
-                        const rCat = card.querySelector('.contant p:first-of-type').innerText;
-
-                        let rLink = 'product-details.html';
-                        if (clickAttr) {
-                            const match = clickAttr.match(/'([^']+)'/);
-                            if (match) rLink = match[1];
-                        }
-
-                        relatedHTML += `
-                            <a href="${rLink}" class="rel-card">
-                                <img src="${rImg}" alt="${rTitle}">
-                                <h4>${rTitle}</h4>
-                                <p>${rCat}</p>
-                            </a>
-                        `;
-                        count++;
-                    }
-                });
-
-                // Related products container mein html dalna
-                if (relatedHTML !== '') {
-                    relatedGrid.innerHTML = relatedHTML;
-                } else {
-                    relatedGrid.innerHTML = '<p style="color:#666; font-size:14px;">No matching related items found.</p>';
-                }
-
-            } else {
-                titleSelector.innerText = "Product Not Found";
-            }
-        })
-        .catch(err => {
-            titleSelector.innerText = "Error loading data structure";
-            console.error(err);
+            thumb.classList.add("active");
         });
+
+        galleryContainer.appendChild(thumb);
+    });
 }
+
+// ======================================================
+// Related Products
+// ======================================================
+
+function renderRelatedProducts(product) {
+    relatedGrid.innerHTML = "";
+
+    let relatedProducts = AYZONE_PRODUCTS.filter(item => {
+        return item.category.toLowerCase() === product.category.toLowerCase() &&
+            item.id !== product.id;
+    });
+
+    if (relatedProducts.length < 4) {
+        const extraProducts = AYZONE_PRODUCTS.filter(item => {
+            return item.id !== product.id &&
+                !relatedProducts.includes(item);
+        });
+
+        relatedProducts = [...relatedProducts, ...extraProducts];
+    }
+
+    relatedProducts.slice(0, 4).forEach(item => {
+        const card = document.createElement("a");
+
+        card.href = `product-details.html?id=${item.id}`;
+        card.className = "rel-card";
+
+        card.innerHTML = `
+            <img src="${item.img}" alt="${item.title}">
+            <h4>${item.title}</h4>
+            <p>${item.category}</p>
+        `;
+
+        relatedGrid.appendChild(card);
+    });
+}
+
+// ======================================================
+// Previous & Next Product
+// ======================================================
+
+const prevProductBtn = document.getElementById("prev-product");
+const nextProductBtn = document.getElementById("next-product");
+
+function renderProductNavigation(product) {
+
+    const currentIndex = AYZONE_PRODUCTS.findIndex(item => item.id === product.id);
+
+    const prevIndex = currentIndex === 0
+        ? AYZONE_PRODUCTS.length - 1
+        : currentIndex - 1;
+
+    const nextIndex = currentIndex === AYZONE_PRODUCTS.length - 1
+        ? 0
+        : currentIndex + 1;
+
+    const prevProduct = AYZONE_PRODUCTS[prevIndex];
+    const nextProduct = AYZONE_PRODUCTS[nextIndex];
+
+    prevProductBtn.href = `product-details.html?id=${prevProduct.id}`;
+    nextProductBtn.href = `product-details.html?id=${nextProduct.id}`;
+
+    prevProductBtn.innerHTML = `← ${prevProduct.title}`;
+    nextProductBtn.innerHTML = `${nextProduct.title} →`;
+}
+
+// ======================================================
+// Initialize Page
+// ======================================================
+
+function initProductPage() {
+    if (typeof AYZONE_PRODUCTS === "undefined") {
+        console.error("AYZONE_PRODUCTS not found.");
+        return;
+    }
+
+    currentProduct = getProductById(productId);
+
+    if (!currentProduct) {
+        showNotFound();
+        return;
+    }
+
+    renderProduct(currentProduct);
+    renderDetails(currentProduct);
+    renderGallery(currentProduct);
+    renderRelatedProducts(currentProduct);
+    renderProductNavigation(currentProduct);
+}
+
+initProductPage();

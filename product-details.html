@@ -91,24 +91,31 @@
         </div>
     </nav>
 
+    <div id="product-not-found" style="display:none;">
+
+        <h1>Product Not Found</h1>
+
+        <p>
+            The requested product does not exist.
+        </p>
+
+        <a href="index.html">
+            Back To Products
+        </a>
+
+    </div>
+
     <main class="detail-wrapper">
         <div class="main-detail-box">
             <div class="detail-left-img">
                 <img id="dynamic-p-img" src="" alt="Product Showcase">
+                <div class="detail-gallery" id="dynamic-gallery"></div>
             </div>
             <div class="detail-right-info">
-                <span class="p-badge" id="dynamic-p-badge">Formulation</span>
+                <span class="p-badge" id="dynamic-p-badge">Loading...</span>
                 <h1 id="dynamic-p-title">Loading Product...</h1>
 
-                <div class="info-card">
-                    <h3>Composition</h3>
-                    <p id="dynamic-p-comp">Retrieving accurate biomedical structure details...</p>
-                </div>
-
-                <div class="info-card">
-                    <h3>Description & Medical Use</h3>
-                    <p id="dynamic-p-desc">Loading dynamic therapeutic class instructions...</p>
-                </div>
+                <div id="dynamic-info-cards-wrapper"></div>
             </div>
         </div>
 
@@ -126,6 +133,18 @@
                     <p>Syrup Range</p>
                 </a>
             </div>
+        </div>
+
+        <div class="product-navigation">
+
+            <a href="#" id="prev-product" class="product-nav-btn">
+                ← Previous Product
+            </a>
+
+            <a href="#" id="next-product" class="product-nav-btn">
+                Next Product →
+            </a>
+
         </div>
     </main>
 
@@ -219,6 +238,7 @@
     </footer>
 
     <script src="app.js"></script>
+    <script src="product-data.js"></script>
     <script src="product-details.js"></script>
 </body>
 

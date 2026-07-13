@@ -39,15 +39,19 @@ function goToSlide(i) {
     resetAuto();
 }
 
-nextBtn.addEventListener("click", () => {
-    nextSlide();
-    resetAuto();
-});
+if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+        nextSlide();
+        resetAuto();
+    });
+}
 
-prevBtn.addEventListener("click", () => {
-    prevSlide();
-    resetAuto();
-});
+if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+        prevSlide();
+        resetAuto();
+    });
+}
 
 function startAuto() {
     interval = setInterval(nextSlide, 8000);
@@ -79,39 +83,39 @@ window.addEventListener("scroll", () => {
 
 // product change filter
 
-const filterLinks = document.querySelectorAll(".sec-3-2 a");
-const products = document.querySelectorAll(".sec-3-3-1");
-const loader = document.querySelector(".product-loader");
+// const filterLinks = document.querySelectorAll(".sec-3-2 a");
+// const products = document.querySelectorAll(".sec-3-3-1");
+// const loader = document.querySelector(".product-loader");
 
-filterLinks.forEach(link => {
-    link.addEventListener("click", function (e) {
-        e.preventDefault();
+// filterLinks.forEach(link => {
+//     link.addEventListener("click", function (e) {
+//         e.preventDefault();
 
-        // active tab
-        filterLinks.forEach(l => l.classList.remove("active"));
-        this.classList.add("active");
+//         // active tab
+//         filterLinks.forEach(l => l.classList.remove("active"));
+//         this.classList.add("active");
 
-        const filter = this.dataset.filter;
+//         const filter = this.dataset.filter;
 
-        // hide products & show loader
-        document.querySelector(".sec-3-3").style.display = "none";
-        loader.style.display = "flex";
+//         // hide products & show loader
+//         document.querySelector(".sec-3-3").style.display = "none";
+//         loader.style.display = "flex";
 
-        setTimeout(() => {
-            loader.style.display = "none";
-            document.querySelector(".sec-3-3").style.display = "flex";
+//         setTimeout(() => {
+//             loader.style.display = "none";
+//             document.querySelector(".sec-3-3").style.display = "flex";
 
-            products.forEach(product => {
-                if (filter === "all") {
-                    product.style.display = "block";
-                } else {
-                    product.style.display =
-                        product.dataset.category === filter ? "block" : "none";
-                }
-            });
-        }, 500); // loader duration
-    });
-});
+//             products.forEach(product => {
+//                 if (filter === "all") {
+//                     product.style.display = "block";
+//                 } else {
+//                     product.style.display =
+//                         product.dataset.category === filter ? "block" : "none";
+//                 }
+//             });
+//         }, 500); // loader duration
+//     });
+// });
 
 
 
@@ -185,3 +189,114 @@ dropdowns.forEach(drop => {
 });
 
 
+
+// =======================================================
+// Dynamic Products Rendering
+// =======================================================
+
+const productGrid = document.getElementById("products-dynamic-grid");
+const loader = document.querySelector(".product-loader");
+const filterLinks = document.querySelectorAll(".sec-3-2 a");
+
+function renderProducts(products) {
+
+    if (!productGrid) return;
+
+    productGrid.innerHTML = "";
+
+    products.forEach(product => {
+
+        const card = document.createElement("div");
+
+        card.className = "sec-3-3-1";
+        card.dataset.category = product.category.toLowerCase();
+
+        card.innerHTML = `
+
+            <div class="img">
+                <img src="${product.img}" alt="${product.title}">
+            </div>
+
+            <div class="contant">
+
+                <p style="text-transform:capitalize;">
+                    ${product.category}
+                </p>
+
+                <h2>${product.title}</h2>
+
+                <p>${product.shortDescription}</p>
+
+                <a href="product-details.html?id=${product.id}">
+                    View Details
+                </a>
+
+            </div>
+
+        `;
+
+        card.addEventListener("click", () => {
+
+            window.location.href =
+                `product-details.html?id=${product.id}`;
+
+        });
+
+        productGrid.appendChild(card);
+
+    });
+
+}
+
+// First Time Render
+
+if (typeof AYZONE_PRODUCTS !== "undefined") {
+
+    renderProducts(AYZONE_PRODUCTS);
+
+}
+
+// =======================================================
+// Product Filter
+// =======================================================
+
+filterLinks.forEach(link => {
+
+    link.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        filterLinks.forEach(btn =>
+            btn.classList.remove("active"));
+
+        this.classList.add("active");
+
+        const category = this.dataset.filter;
+
+        loader.style.display = "flex";
+        productGrid.style.display = "none";
+
+        setTimeout(() => {
+
+            loader.style.display = "none";
+            productGrid.style.display = "grid";
+
+            if (category === "all") {
+
+                renderProducts(AYZONE_PRODUCTS);
+
+            } else {
+
+                const filtered = AYZONE_PRODUCTS.filter(product =>
+                    product.category.toLowerCase() === category
+                );
+
+                renderProducts(filtered);
+
+            }
+
+        }, 400);
+
+    });
+
+});
