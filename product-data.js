@@ -299,7 +299,7 @@ const AYZONE_PRODUCTS = [
     {
         id: "bcal-c",
         title: "Bcal-C",
-        category: "sachets",
+        category: "sachet",
         img: "./images/sachet/bcalc-sachet-01.jpg",
         gallery: [
             "./images/sachet/bcalc-sachet-01.jpg",

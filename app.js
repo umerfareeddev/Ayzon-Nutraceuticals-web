@@ -280,6 +280,9 @@ filterLinks.forEach(link => {
 
             loader.style.display = "none";
             productGrid.style.display = "grid";
+            productGrid.style.gridTemplateColumns = "repeat(4, minmax(0, 1fr))";
+            productGrid.style.paddingLeft = "10px";
+            productGrid.style.paddingRight = "10px";
 
             if (category === "all") {
 
